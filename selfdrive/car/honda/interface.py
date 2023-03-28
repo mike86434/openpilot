@@ -93,7 +93,7 @@ class CarInterface(CarInterfaceBase):
       if fw.ecu == "eps" and b"," in fw.fwVersion:
         eps_modified = True
         
-    eps_modified_clarity = 1
+    eps_modified_clarity = 3
     for fw in car_fw:
       if fw.ecu == "eps" and b"-" not in fw.fwVersion and b"," in fw.fwVersion:
         eps_modified_clarity = 3
