@@ -33,8 +33,8 @@ def create_brake_command(packer, apply_brake, pump_on, pcm_override, pcm_cancel_
   pcm_fault_cmd = False
 
   values = {
-    "COMPUTER_BRAKE": apply_brake,
-    "BRAKE_PUMP_REQUEST": pump_on,
+    "COMPUTER_BRAKE_ALT": apply_brake,
+    "BRAKE_PUMP_REQUEST_ALT": pump_on,
     "CRUISE_OVERRIDE": pcm_override,
     "CRUISE_FAULT_CMD": pcm_fault_cmd,
     "CRUISE_CANCEL_CMD": pcm_cancel_cmd,
