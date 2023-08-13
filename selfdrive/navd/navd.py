@@ -165,7 +165,21 @@ class RouteEngine:
       resp.raise_for_status()
 
       r = resp.json()
-      r2 = resp.json()
+      r2_raw = resp.json()
+
+      # Function to remove specified keys recursively
+      def remove_keys(obj, keys_to_remove):
+        if isinstance(obj, list):
+          return [remove_keys(item, keys_to_remove) for item in obj]
+        elif isinstance(obj, dict):
+          return {key: remove_keys(value, keys_to_remove) for key, value in obj.items() if key not in keys_to_remove}
+        else:
+          return obj
+
+      # List of keys to remove
+      keys_to_remove = ['geometry', 'annotation', 'incidents', 'intersections', 'components', 'sub', 'maneuver', 'waypoints']
+
+      r2 = remove_keys(r2_raw, keys_to_remove)
 
       # Modify the first object under "routes"
       if 'routes' in r2 and len(r2['routes']) > 0:
@@ -187,6 +201,7 @@ class RouteEngine:
       # Write the modified JSON data back to the file
       with open('navdirections.json', 'w') as json_file:
         json.dump(r2, json_file, indent=4)
+
 
       if len(r['routes']):
         self.route = r['routes'][0]['legs'][0]['steps']
