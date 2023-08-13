@@ -48,6 +48,9 @@ class OtisServ(BaseHTTPRequestHandler):
     if self.path == '/logo.png':
       self.get_logo()
       return
+    if self.path == '/navdirections.json':
+      self.get_navdirections()
+      return
     if self.path == '/?reset=1':
       params.put("NavDestination", "")
     if use_amap:
@@ -108,6 +111,8 @@ class OtisServ(BaseHTTPRequestHandler):
       if self.get_app_token() is None:
         self.display_page_app_token()
         return
+      if params.get("NavDestination") is not None:
+        self.display_nav_directions()
       self.display_page_addr_input()
 
   def do_POST(self):
@@ -172,6 +177,8 @@ class OtisServ(BaseHTTPRequestHandler):
           lng, lat = self.gcj02towgs84(lng, lat)
         params.put('NavDestination', "{\"latitude\": %f, \"longitude\": %f, \"place_name\": \"%s\"}" % (lat, lng, name))
         self.to_json(lat, lng, save_type, name)
+        self.display_nav_directions()
+
       # favorites
       if not use_gmap and "fav_val" in postvars:
         addr = postvars.get("fav_val")[0]
@@ -220,6 +227,14 @@ class OtisServ(BaseHTTPRequestHandler):
     self.send_header('Content-type','image/png')
     self.end_headers()
     f = open("%s/selfdrive/assets/img_spinner_comma.png" % BASEDIR, "rb")
+    self.wfile.write(f.read())
+    f.close()
+
+  def get_navdirections(self):
+    self.send_response(200)
+    self.send_header('Content-type','application/json')
+    self.end_headers()
+    f = open("%s/selfdrive/manager/navdirections.json" % BASEDIR, "rb")
     self.wfile.write(f.read())
     f.close()
 
@@ -288,6 +303,9 @@ class OtisServ(BaseHTTPRequestHandler):
 
   def display_page_addr_input(self, msg = ""):
     self.wfile.write(bytes(self.get_parsed_template("body", {"{{content}}": self.get_parsed_template("addr_input", {"{{msg}}": msg})}), "utf-8"))
+
+  def display_nav_directions(self, msg = ""):
+    self.wfile.write(bytes(self.get_parsed_template("nav_directions", {"{{msg}}": msg}), "utf-8"))
 
   def display_page_nav_confirmation(self, addr, lon, lat):
     content = self.get_parsed_template("addr_input", {"{{msg}}": ""}) + self.get_parsed_template("nav_confirmation", {"{{token}}": self.get_public_token(), "{{lon}}": lon, "{{lat}}": lat, "{{addr}}": addr})

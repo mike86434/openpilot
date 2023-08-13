@@ -165,6 +165,29 @@ class RouteEngine:
       resp.raise_for_status()
 
       r = resp.json()
+      r2 = resp.json()
+
+      # Modify the first object under "routes"
+      if 'routes' in r2 and len(r2['routes']) > 0:
+        first_route = r2['routes'][0]
+
+        # Get the JSON string from self.params
+        nav_destination_json = self.params.get('NavDestination')
+
+        try:
+          # Parse the JSON string
+          nav_destination_data = json.loads(nav_destination_json)
+          place_name = nav_destination_data.get('place_name', 'Default Place Name')
+
+          # Set the 'Destination' key using the 'place_name' value
+          first_route['Destination'] = place_name
+        except json.JSONDecodeError as e:
+          print(f"Error decoding JSON: {e}")
+        
+      # Write the modified JSON data back to the file
+      with open('navdirections.json', 'w') as json_file:
+        json.dump(r2, json_file, indent=4)
+
       if len(r['routes']):
         self.route = r['routes'][0]['legs'][0]['steps']
         self.route_geometry = []
