@@ -100,9 +100,9 @@ def mapd_ready(started: bool, params: Params, CP: car.CarParams) -> bool:
 
 def uploader_ready(started: bool, params: Params, CP: car.CarParams) -> bool:
   if not params.get_bool("OnroadUploads"):
-    return only_offroad(started, params, CP)
+    return False
 
-  return always_run(started, params, CP)
+  return False
 
 def or_(*fns):
   return lambda *args: operator.or_(*(fn(*args) for fn in fns))
