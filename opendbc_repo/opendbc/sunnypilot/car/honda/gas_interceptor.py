@@ -26,7 +26,7 @@ class GasInterceptorCarController:
 
     if self.CP_SP.enableGasInterceptor:
       # way too aggressive at low speed without this
-      gas_mult = np.interp(CS.out.vEgo, [0., 10.], [0.4, 1.0])
+      gas_mult = np.interp(CS.out.vEgo, [0., 10.], [1.0, 1.0])
       # send exactly zero if apply_gas is zero. Interceptor will send the max between read value and apply_gas.
       # This prevents unexpected pedal range rescaling
       # Sending non-zero gas when OP is not enabled will cause the PCM not to respond to throttle as expected
