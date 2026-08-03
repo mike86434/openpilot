@@ -181,11 +181,14 @@ class Controls(ControlsExt):
     CC.cruiseControl.cancel = CS.cruiseState.enabled and (not CC.enabled or not self.CP.pcmCruise)
     CC.cruiseControl.resume = CC.enabled and CS.cruiseState.standstill and not self.sm['longitudinalPlan'].shouldStop
 
+    v_lead = CS.vEgo + self.sm['radarState'].leadOne.vRel
+    v_cruise = CS.vCruiseCluster * CV.KPH_TO_MS
+    has_lead = self.sm['longitudinalPlan'].hasLead
     hudControl = CC.hudControl
-    hudControl.setSpeed = float(CS.vEgo + self.sm['radarState'].leadOne.vRel if self.sm['longitudinalPlan'].hasLead else CS.vCruiseCluster * CV.KPH_TO_MS)
+    hudControl.setSpeed = float(v_lead if has_lead and v_lead < v_cruise else v_cruise)
     hudControl.speedVisible = CC.enabled
     hudControl.lanesVisible = CC.enabled
-    hudControl.leadVisible = self.sm['longitudinalPlan'].hasLead
+    hudControl.leadVisible = has_lead
     hudControl.leadDistanceBars = self.sm['selfdriveState'].personality.raw + 1
     hudControl.visualAlert = self.sm['selfdriveState'].alertHudVisual
 
