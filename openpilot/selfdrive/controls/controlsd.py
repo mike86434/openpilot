@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import math
+import numpy as np
 from numbers import Number
 
 from openpilot.cereal import log
@@ -80,11 +81,14 @@ class Controls(ControlsExt):
 
   def state_control(self):
     CS = self.sm['carState']
+    NRDR_STEER_RATIO_ANGLE_BP = [0.0, 75.0, 150.0, 250.0]  # |steering-wheel angle|, deg
+    NRDR_STEER_RATIO_V = [18.5, 17.4, 16.0, 15.6]          #   # effective steer ratio at each break
+    sr = float(np.interp(abs(CS.steeringAngleDeg), NRDR_STEER_RATIO_ANGLE_BP, NRDR_STEER_RATIO_V))
 
     # Update VehicleModel
     lp = self.sm['liveParameters']
     x = max(lp.stiffnessFactor, 0.1)
-    sr = max(lp.steerRatio, 0.1)
+    # sr = max(lp.steerRatio, 0.1)
     self.VM.update_params(x, sr)
 
     steer_angle_without_offset = math.radians(CS.steeringAngleDeg - lp.angleOffsetDeg)
