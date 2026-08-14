@@ -77,7 +77,7 @@ class TorqueSettingsLayout(Widget):
       param="TorqueParamsOverrideLatAccelFactor",
       description="",
       min_value=1,
-      max_value=500,
+      max_value=700,
       value_change_step=1,
       label_callback=(lambda x: f"{x/100} m/s^2"),
       use_float_scaling=True
