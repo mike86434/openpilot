@@ -82,7 +82,7 @@ class Controls(ControlsExt):
   def state_control(self):
     CS = self.sm['carState']
     NRDR_STEER_RATIO_ANGLE_BP = [0.0, 75.0, 150.0, 250.0]  # |steering-wheel angle|, deg
-    NRDR_STEER_RATIO_V = [16.5, 14.4, 12.0, 10.6]          #   # effective steer ratio at each break
+    NRDR_STEER_RATIO_V = [16.5, 15.4, 14.0, 13.6]          #   # effective steer ratio at each break
     sr = float(np.interp(abs(CS.steeringAngleDeg), NRDR_STEER_RATIO_ANGLE_BP, NRDR_STEER_RATIO_V))
 
     # Update VehicleModel
@@ -147,7 +147,7 @@ class Controls(ControlsExt):
       new_desired_curvature = self.sm['lateralManeuverPlan'].desiredCurvature if CC.latActive else self.curvature
     else:
       new_desired_curvature = model_v2.action.desiredCurvature if CC.latActive else self.curvature
-    print(new_desired_curvature)
+
     self.desired_curvature, curvature_limited = clip_curvature(CS.vEgo, self.desired_curvature, new_desired_curvature, lp.roll)
     lat_delay = self.sm["liveDelay"].lateralDelay + LAT_SMOOTH_SECONDS
 
@@ -156,6 +156,10 @@ class Controls(ControlsExt):
                                                      self.steer_limited_by_safety, self.desired_curvature,
                                                      self.calibrated_pose, curvature_limited, lat_delay)
     actuators.torque = float(steer)
+    print(f"Curvature: {self.curvature} | ")
+    print(f"Desired: {new_desired_curvature} | ")
+    print(f"Error: {new_desired_curvature - self.curvature} | ")
+    print(f"Lateral Out: {lateral_output} | ")
     if self.CP.steerControlType == car.CarParams.SteerControlType.curvature:
       actuators.curvature = float(lateral_output)
     else:
