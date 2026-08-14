@@ -81,8 +81,8 @@ class Controls(ControlsExt):
 
   def state_control(self):
     CS = self.sm['carState']
-    NRDR_STEER_RATIO_ANGLE_BP = [0.0, 75.0, 150.0, 250.0]  # |steering-wheel angle|, deg
-    NRDR_STEER_RATIO_V = [16.5, 15.4, 14.0, 13.6]          #   # effective steer ratio at each break
+    NRDR_STEER_RATIO_ANGLE_BP = [0.0, 250.0]  # |steering-wheel angle|, deg
+    NRDR_STEER_RATIO_V = [18.5, 12.74]          #   # effective steer ratio at each break
     sr = float(np.interp(abs(CS.steeringAngleDeg), NRDR_STEER_RATIO_ANGLE_BP, NRDR_STEER_RATIO_V))
 
     # Update VehicleModel
