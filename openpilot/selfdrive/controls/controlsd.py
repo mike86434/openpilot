@@ -84,7 +84,7 @@ class Controls(ControlsExt):
     NRDR_STEER_RATIO_ANGLE_BP = [0.0, 75.0, 150.0, 250.0]  # |steering-wheel angle|, deg
     NRDR_STEER_RATIO_V = [16.5, 14.4, 12.0, 10.6]          #   # effective steer ratio at each break
     sr = float(np.interp(abs(CS.steeringAngleDeg), NRDR_STEER_RATIO_ANGLE_BP, NRDR_STEER_RATIO_V))
-
+    print(sr)
     # Update VehicleModel
     lp = self.sm['liveParameters']
     x = max(lp.stiffnessFactor, 0.1)
