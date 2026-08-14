@@ -84,7 +84,7 @@ class Controls(ControlsExt):
     NRDR_STEER_RATIO_ANGLE_BP = [0.0, 75.0, 150.0, 250.0]  # |steering-wheel angle|, deg
     NRDR_STEER_RATIO_V = [16.5, 14.4, 12.0, 10.6]          #   # effective steer ratio at each break
     sr = float(np.interp(abs(CS.steeringAngleDeg), NRDR_STEER_RATIO_ANGLE_BP, NRDR_STEER_RATIO_V))
-    print(sr)
+
     # Update VehicleModel
     lp = self.sm['liveParameters']
     x = max(lp.stiffnessFactor, 0.1)
@@ -147,6 +147,7 @@ class Controls(ControlsExt):
       new_desired_curvature = self.sm['lateralManeuverPlan'].desiredCurvature if CC.latActive else self.curvature
     else:
       new_desired_curvature = model_v2.action.desiredCurvature if CC.latActive else self.curvature
+    print(new_desired_curvature)
     self.desired_curvature, curvature_limited = clip_curvature(CS.vEgo, self.desired_curvature, new_desired_curvature, lp.roll)
     lat_delay = self.sm["liveDelay"].lateralDelay + LAT_SMOOTH_SECONDS
 
