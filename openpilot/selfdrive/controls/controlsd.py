@@ -156,10 +156,10 @@ class Controls(ControlsExt):
                                                      self.steer_limited_by_safety, self.desired_curvature,
                                                      self.calibrated_pose, curvature_limited, lat_delay)
     actuators.torque = float(steer)
-    print(f"Curvature: {self.curvature:.5f} | ")
-    print(f"Desired: {self.desired_curvature:.5f} | ")
-    print(f"Error: {new_desired_curvature - self.curvature} | ")
-    print(f"Steer: {steer:.5f} | ")
+    # print(f"Curvature: {self.curvature:.5f} | ")
+    # print(f"Desired: {self.desired_curvature:.5f} | ")
+    # print(f"Error: {(new_desired_curvature - self.curvature):.5f} | ")
+    # print(f"Steer: {steer:.5f} | ")
     if self.CP.steerControlType == car.CarParams.SteerControlType.curvature:
       actuators.curvature = float(lateral_output)
     else:
