@@ -118,8 +118,8 @@ class LatControlTorque(LatControl):
       pid_log.desiredLateralJerk = float(desired_lateral_jerk)
       pid_log.saturated = bool(self._check_saturation(self.steer_max - abs(output_torque) < 1e-3, CS, steer_limited_by_safety, curvature_limited))
 
-    print(f"Lat Accel Factor: {latAccelFactor:.5f} | ")
-    print(f"Lat Accel Offset: {latAccelOffset:.5f} | ")
+    print(f"Lat Accel Factor: {self.torque_params.latAccelFactor:.5f} | ")
+    print(f"Lat Accel Offset: {self.torque_params.latAccelOffset:.5f} | ")
     print(f"Friction: {friction:.5f} | ")
     print(f"Expected Lat Accel: {setpoint:.5f} | ")
     print(f"Actual Lat Accel: {measurement:.5f} | ")
