@@ -417,6 +417,7 @@ DBC = CAR.create_dbc_map()
 
 STEER_THRESHOLD = {
   # default is 1200, overrides go here
+  CAR.HONDA_CLARITY: 1500,
   CAR.ACURA_RDX: 400,
   CAR.HONDA_CRV_EU: 400,
   CAR.HONDA_ACCORD_11G: 600,
