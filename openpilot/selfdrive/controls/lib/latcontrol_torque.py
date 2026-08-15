@@ -120,7 +120,7 @@ class LatControlTorque(LatControl):
 
     print(f"Lat Accel Factor: {self.torque_params.latAccelFactor:.5f} | ")
     print(f"Lat Accel Offset: {self.torque_params.latAccelOffset:.5f} | ")
-    print(f"Friction: {friction:.5f} | ")
+    print(f"Friction: {self.torque_params.friction:.5f} | ")
     print(f"Expected Lat Accel: {setpoint:.5f} | ")
     print(f"Actual Lat Accel: {measurement:.5f} | ")
     print(f"Output Torque: {output_torque:.5f} | ")
