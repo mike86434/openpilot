@@ -150,6 +150,9 @@ class CarController(CarControllerBase, MadsCarController, GasInterceptorCarContr
     apply_torque = int(np.interp(-limited_torque * self.params.STEER_MAX,
                                  self.params.STEER_LOOKUP_BP, self.params.STEER_LOOKUP_V))
 
+    if CS.out.steeringPressed:
+      apply_torque = 0
+
     # Send CAN commands
     can_sends = []
 
