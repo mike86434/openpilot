@@ -22,7 +22,7 @@ sections:
     title: Adjust Lane Turn Speed
     description: Set the maximum speed for lane turn desires.
     min: 0
-    max: 20
+    max: 25
     step: 1
     unit:
       metric: km/h
