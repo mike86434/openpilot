@@ -206,7 +206,7 @@ class CarInterface(CarInterfaceBase):
     # TODO-SP: remove when https://github.com/commaai/opendbc/pull/2687 is merged
     elif candidate == CAR.HONDA_CLARITY:
       ret.steerActuatorDelay = 0.15
-      ret.lateralParams.torqueBP, ret.lateralParams.torqueV = [[0, 3840], [0, 3840]]
+      ret.lateralParams.torqueBP, ret.lateralParams.torqueV = [[0, 3500], [0, 3500]]
       CarInterfaceBase.configure_torque_tune(candidate, ret.lateralTuning)
 
     else:
@@ -310,7 +310,7 @@ class CarInterface(CarInterfaceBase):
             stock_cp.lateralParams.torqueBP, stock_cp.lateralParams.torqueV = [[0, 5760, 15360], [0, 2560, 3840]]
             stock_cp.lateralTuning.pid.kpV, stock_cp.lateralTuning.pid.kiV = [[0.1575], [0.05175]]
           elif fw.ecu == "eps" and b"-" in fw.fwVersion and b"," in fw.fwVersion:
-            stock_cp.lateralParams.torqueBP, stock_cp.lateralParams.torqueV = [[0, 3840], [0, 3840]]
+            stock_cp.lateralParams.torqueBP, stock_cp.lateralParams.torqueV = [[0, 3500], [0, 3500]]
             _low_max = 25. * CV.MPH_TO_MS
             _bp = [0., _low_max - 1e-3, _low_max, 50. * CV.MPH_TO_MS]
 
